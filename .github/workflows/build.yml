@@ -45,9 +45,13 @@ jobs:
         id: get_version
         run: |
           LATEST=$(git tag --list 'v*' --sort=-v:refname | head -n1 | sed 's/^v//')
-          if [ -z "$LATEST" ]; then LATEST="0.0.1"; fi
-          IFS='.' read -r MAJOR MINOR PATCH <<<"${LATEST//./ }"
-          if [ -z "$PATCH" ]; then PATCH=0; fi
+          if [[ ! "$LATEST" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            MAJOR=0
+            MINOR=0
+            PATCH=0
+          else
+            IFS='.' read -r MAJOR MINOR PATCH <<<"$LATEST"
+          fi
           PATCH=$((PATCH+1))
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
