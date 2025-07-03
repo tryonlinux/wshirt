@@ -85,3 +85,4 @@ wshirt <command> [options]
 ## Contributing
 
 Feel free to submit issues or pull requests to improve the Wear Shirt.
+I hate writing unit tests in rust, so feel free to add them please!
