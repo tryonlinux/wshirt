@@ -36,7 +36,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wshirt-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/wshirt
+          path: |
+            target/${{ matrix.target }}/release/wshirt*
 
   version:
     needs: build
@@ -68,6 +69,7 @@ jobs:
         with:
           path: dist
       - name: Create GitHub Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
